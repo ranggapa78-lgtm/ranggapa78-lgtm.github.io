@@ -3,20 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Valentine Journey for Vira ❤️</title>
+    <title>Special for My Vira ❤️</title>
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
     <style>
         :root { --pink: #ff85a1; --dark-pink: #ff4d6d; --bg: #fff0f3; }
         body { background: var(--bg); font-family: 'Poppins', sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; padding: 20px; overflow: hidden; }
         
-        /* Background Animation */
         .heart { position: fixed; color: var(--pink); font-size: 20px; top: -20px; z-index: 0; animation: fall linear forwards; }
         @keyframes fall { to { transform: translateY(105vh) rotate(360deg); } }
 
         .card { background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(8px); padding: 40px 30px; border-radius: 30px; box-shadow: 0 15px 35px rgba(255, 77, 109, 0.2); width: 100%; max-width: 380px; text-align: center; position: relative; z-index: 10; border: 1px solid rgba(255,255,255,0.5); }
         h1 { font-family: 'Dancing Script', cursive; color: var(--dark-pink); font-size: 2.5rem; margin-bottom: 10px; }
-        
         .step-info { font-size: 0.7rem; color: #aaa; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 2px; }
         .hint { font-size: 0.75rem; color: var(--pink); margin-top: -10px; margin-bottom: 10px; font-style: italic; }
         
@@ -31,16 +29,12 @@
         @keyframes fadeIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
         
         .reward-text { font-size: 2.2rem; font-weight: 700; color: #2d6a4f; margin: 15px 0; }
-        
-        /* Audio Button */
         .music-btn { position: fixed; top: 20px; right: 20px; background: white; border-radius: 50%; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.1); z-index: 100; font-size: 20px; }
     </style>
 </head>
 <body>
 
-    <audio id="myAudio" loop>
-        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
-    </audio>
+    <div id="youtube-player" style="position: absolute; top: -1000px;"></div>
     <div class="music-btn" onclick="toggleMusic()">🎵</div>
 
     <div id="hearts-container"></div>
@@ -118,8 +112,18 @@
         </div>
     </div>
 
+    <script src="https://www.youtube.com/iframe_api"></script>
     <script>
-        // Typing Effect
+        let player;
+        function onYouTubeIframeAPIReady() {
+            player = new YT.Player('youtube-player', {
+                height: '0',
+                width: '0',
+                videoId: 'vBy7FaapGRo', // ID Youtube: Daniel Caesar - Best Part
+                playerVars: { 'autoplay': 0, 'loop': 1, 'playlist': 'vBy7FaapGRo' }
+            });
+        }
+
         const text = "Selamat hari Valentine! Aku bikin kuis kecil ini khusus buat kamu. Jawab yang bener ya biar dapet hadiah maksimal! ❤️";
         let i = 0;
         function typing() {
@@ -131,7 +135,6 @@
         }
         window.onload = typing;
 
-        // Falling Hearts
         function createHeart() {
             const heart = document.createElement('div');
             heart.classList.add('heart');
@@ -144,10 +147,9 @@
         }
         setInterval(createHeart, 300);
 
-        // Music Toggle
         function toggleMusic() {
-            const audio = document.getElementById("myAudio");
-            return audio.paused ? audio.play() : audio.pause();
+            if (player.getPlayerState() == 1) player.pauseVideo();
+            else player.playVideo();
         }
 
         function showPage(pageId) {
@@ -157,7 +159,7 @@
 
         function startQuiz() {
             showPage('q1');
-            document.getElementById("myAudio").play(); // Auto play music saat mulai
+            if (player) player.playVideo();
         }
 
         function calculateAndFinish() {
@@ -176,8 +178,6 @@
 
             document.getElementById('total-hadiah').innerText = "Rp " + Math.max(0, total).toLocaleString('id-ID');
             showPage('result-page');
-            
-            // Efek Kembang Api Kertas (Confetti)
             confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
         }
 
