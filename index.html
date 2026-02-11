@@ -8,18 +8,20 @@
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
     <style>
         :root { --pink: #ff85a1; --dark-pink: #ff4d6d; --bg: #fff0f3; }
+        /* Cursor Hati */
         * { cursor: url('https://cur.cursors-4u.net/symbols/sym-1/sym49.cur'), auto !important; }
         body { background: var(--bg); font-family: 'Poppins', sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; padding: 20px; overflow: hidden; }
         
+        /* Animasi Hati Jatuh */
         .heart { position: fixed; color: var(--pink); font-size: 20px; top: -20px; z-index: 0; animation: fall linear forwards; pointer-events: none; }
         @keyframes fall { to { transform: translateY(105vh) rotate(360deg); } }
 
         .progress-container { width: 100%; height: 6px; background: #ffe5ec; position: absolute; top: 0; left: 0; border-radius: 30px 30px 0 0; overflow: hidden; }
-        .progress-bar { height: 100%; width: 0%; background: linear-gradient(90deg, var(--dark-pink), var(--pink)); transition: 0.5s; }
+        .progress-bar { height: 100%; width: 0%; background: linear-gradient(90deg, var(--dark-pink), var(--pink)); transition: 0.8s cubic-bezier(0.4, 0, 0.2, 1); }
 
         .card { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); padding: 50px 30px 40px; border-radius: 30px; box-shadow: 0 25px 50px rgba(255, 77, 109, 0.2); width: 100%; max-width: 380px; text-align: center; position: relative; z-index: 10; border: 2px solid white; max-height: 90vh; overflow-y: auto; }
         
-        /* Gaya untuk Gallery Foto */
+        /* Gallery Foto Grid */
         .photo-gallery { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin: 20px 0; }
         .photo-gallery img { width: 100%; height: 120px; object-fit: cover; border-radius: 15px; border: 3px solid white; box-shadow: 0 5px 15px rgba(0,0,0,0.1); transition: 0.3s; }
         .photo-gallery img:hover { transform: scale(1.05) rotate(2deg); }
@@ -54,13 +56,14 @@
         <div id="start-page" class="page active">
             <div style="font-size: 55px; margin-bottom: 10px;">✨</div>
             <h1>Selamat Hari Valentine Sayang...</h1>
-            <p id="typing-text" style="font-size: 14px; color: #666;"></p>
-            <button onclick="startQuiz()">Buka Hadiah Valentine ✨</button>
+            <p id="typing-text" style="font-size: 14px; color: #666; line-height: 1.6;"></p>
+            <button onclick="startQuiz()">Lanjutkan ✨</button>
         </div>
 
         <div id="q1" class="page">
             <div class="step-info">Mission 01</div>
             <p>Siapa nama lengkap pasangan kamu?</p>
+            <p class="hint">huruf kecil semua</p>
             <input type="text" id="ans1" autocomplete="off" placeholder="Ketik di sini...">
             <button onclick="nextStep('q2', 20)">Lanjut ✨</button>
         </div>
@@ -68,6 +71,7 @@
         <div id="q2" class="page">
             <div class="step-info">Mission 02</div>
             <p>Siapa nama lengkap kamu?</p>
+            <p class="hint">huruf kecil semua</p>
             <input type="text" id="ans2" autocomplete="off" placeholder="Ketik di sini...">
             <button onclick="nextStep('q3', 40)">Lanjut ✨</button>
         </div>
@@ -99,7 +103,7 @@
         <div id="q5" class="page">
             <div class="step-info">Final Mission</div>
             <p>Kapan ulang tahun pasangan kamu?</p>
-            <p class="hint">Format: 09-07-2004</p>
+            <p class="hint">Contoh: 09-07-2004</p>
             <input type="text" id="ans5" autocomplete="off" placeholder="DD-MM-YYYY">
             <button onclick="nextStep('gallery-page', 90)">Lihat Kenangan Kita ❤️</button>
         </div>
@@ -114,7 +118,7 @@
                 <img src="foto4.jpg" alt="Memory 4">
             </div>
             <p style="font-size: 13px; color: #888;">Setiap momen bareng kamu adalah hadiah terindah...</p>
-            <button onclick="nextStep('final-form', 95)">Tulis Harapan ❤️</button>
+            <button onclick="nextStep('final-form', 95)">Lanjutkan ❤️</button>
         </div>
 
         <div id="final-form" class="page">
@@ -122,13 +126,13 @@
             <h2 style="color: var(--dark-pink); font-family: 'Dancing Script', cursive; font-size: 2rem;">Harapan & Pesan</h2>
             <textarea id="harapan" placeholder="Apa harapanmu buat kita tahun ini?"></textarea>
             <textarea id="pesan_kesan" placeholder="Satu pesan manis buat aku..."></textarea>
-            <button id="finish-btn" onclick="calculateAndFinish()">Lihat Hadiah Kamu 🎁</button>
+            <button id="finish-btn" onclick="calculateAndFinish()">Selesai ✨</button>
         </div>
 
         <div id="result-page" class="page">
             <div style="font-size: 70px;">🎊</div>
             <h2 style="color: var(--dark-pink); font-family: 'Dancing Script', cursive; font-size: 2rem;">Happy Valentine!</h2>
-            <p>Total hadiah yang terkumpul:</p>
+            <p>Karena kamu sudah menjawab dengan tulus, ini hadiah untukmu:</p>
             <div class="reward-text" id="total-hadiah">Rp 0</div>
             <button onclick="klaimWA()">Klaim Hadiah (WhatsApp) 💬</button>
         </div>
@@ -136,7 +140,6 @@
 
     <script src="https://www.youtube.com/iframe_api"></script>
     <script>
-        // SCRIPT TETAP SAMA SEPERTI MILIKMU (Hanya memanggil fungsi nextStep sesuai urutan baru)
         let player;
         function onYouTubeIframeAPIReady() {
             player = new YT.Player('youtube-player', {
@@ -146,7 +149,8 @@
             });
         }
 
-        const text = "Aku buat web ini khusus buat kamu. Jawab semua pertanyaan ini dengan hati ya, karena hadiahnya tergantung jawabanmu! I love you! ❤️";
+        // Teks Romantis Awal
+        const text = "Setiap detik bersamamu adalah kenangan yang selalu aku simpan. Web sederhana ini aku buat khusus untuk merayakan betapa berartinya kamu bagiku. Jawab dengan hati ya sayang... I love you! ❤️";
         let idx = 0;
         function typing() {
             if (idx < text.length) {
@@ -202,6 +206,7 @@
             const h = document.getElementById('harapan').value;
             const p = document.getElementById('pesan_kesan').value;
 
+            // Logika Hadiah
             if (a1 !== "rangga putra aidani") total -= 40000;
             if (a2 !== "vira okta fauziyah") total -= 40000;
             if (a3 !== "ayam penyet") total -= 40000;
@@ -210,6 +215,7 @@
 
             const finalNominal = "Rp " + Math.max(0, total).toLocaleString('id-ID');
 
+            // Kirim ke Formspree
             try {
                 await fetch("https://formspree.io/f/mkovovgq", {
                     method: 'POST',
@@ -221,13 +227,14 @@
             document.getElementById('myBar').style.width = "100%";
             document.getElementById('total-hadiah').innerText = finalNominal;
             showPage('result-page');
-            confetti({ particleCount: 200, spread: 100, origin: { y: 0.6 }, colors: ['#ff85a1', '#ff4d6d', '#ffffff'] });
+            confetti({ particleCount: 200, spread: 100, origin: { y: 0.6 } });
         }
 
         function klaimWA() {
             const noWA = "6289523949516";
             const nominal = document.getElementById('total-hadiah').innerText;
-            const teks = `Halo Rangga! ❤️%0A%0AAku dapet hadiah Valentine dari web kamu sebesar *${nominal}*. Makasih banyak ya sayang, i love you! 💖`;
+            const h = document.getElementById('harapan').value;
+            const teks = `Sayang! ❤️ Aku sudah menyelesaikan perjalanannya dan dapet hadiah *${nominal}*. Makasih banyak ya, I love you! ❤️%0A%0AHarapan aku: ${h}`;
             window.open(`https://wa.me/${noWA}?text=${teks}`, '_blank');
         }
     </script>
