@@ -11,7 +11,6 @@
         * { cursor: url('https://cur.cursors-4u.net/symbols/sym-1/sym49.cur'), auto !important; }
         body { background: var(--bg); font-family: 'Poppins', sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; padding: 20px; overflow: hidden; }
         
-        /* Hearts background */
         .heart { position: fixed; color: var(--pink); font-size: 20px; top: -20px; z-index: 0; animation: fall linear forwards; pointer-events: none; }
         @keyframes fall { to { transform: translateY(105vh) rotate(360deg); } }
 
@@ -36,7 +35,6 @@
         
         .reward-text { font-size: 2.4rem; font-weight: 800; color: #2d6a4f; margin: 20px 0; letter-spacing: -1px; }
         .music-btn { position: fixed; bottom: 20px; right: 20px; background: white; border-radius: 50%; width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 5px 15px rgba(0,0,0,0.1); z-index: 100; font-size: 22px; transition: 0.3s; }
-        .music-btn:hover { transform: rotate(20deg) scale(1.1); }
     </style>
 </head>
 <body oncontextmenu="return false;">
@@ -50,7 +48,7 @@
         
         <div id="start-page" class="page active">
             <div style="font-size: 55px; margin-bottom: 10px;">✨</div>
-            <h1 id="greeting">Halo Sayang...</h1>
+            <h1>Selamat Hari Valentine Sayang...</h1>
             <p id="typing-text" style="font-size: 14px; color: #666;"></p>
             <button onclick="startQuiz()">Buka Hadiah Valentine ✨</button>
         </div>
@@ -130,12 +128,6 @@
                 playerVars: { 'autoplay': 0, 'loop': 1, 'playlist': 'vBy7FaapGRo' }
             });
         }
-
-        // Greeting & Typing
-        const now = new Date();
-        const hour = now.getHours();
-        const greeting = hour < 12 ? "Selamat Pagi Vira Sayang..." : hour < 18 ? "Selamat Siang Vira Sayang..." : "Selamat Malam Vira Sayang...";
-        document.getElementById('greeting').innerText = greeting;
 
         const text = "Aku buat web ini khusus buat kamu. Jawab semua pertanyaan ini dengan hati ya, karena hadiahnya tergantung jawabanmu! I love you! ❤️";
         let idx = 0;
