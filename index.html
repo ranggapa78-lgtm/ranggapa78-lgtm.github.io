@@ -17,9 +17,14 @@
         .progress-container { width: 100%; height: 6px; background: #ffe5ec; position: absolute; top: 0; left: 0; border-radius: 30px 30px 0 0; overflow: hidden; }
         .progress-bar { height: 100%; width: 0%; background: linear-gradient(90deg, var(--dark-pink), var(--pink)); transition: 0.5s; }
 
-        .card { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); padding: 50px 30px 40px; border-radius: 30px; box-shadow: 0 25px 50px rgba(255, 77, 109, 0.2); width: 100%; max-width: 380px; text-align: center; position: relative; z-index: 10; border: 2px solid white; }
-        h1 { font-family: 'Dancing Script', cursive; color: var(--dark-pink); font-size: 2.8rem; margin: 0 0 10px; }
+        .card { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); padding: 50px 30px 40px; border-radius: 30px; box-shadow: 0 25px 50px rgba(255, 77, 109, 0.2); width: 100%; max-width: 380px; text-align: center; position: relative; z-index: 10; border: 2px solid white; max-height: 90vh; overflow-y: auto; }
         
+        /* Gaya untuk Gallery Foto */
+        .photo-gallery { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin: 20px 0; }
+        .photo-gallery img { width: 100%; height: 120px; object-fit: cover; border-radius: 15px; border: 3px solid white; box-shadow: 0 5px 15px rgba(0,0,0,0.1); transition: 0.3s; }
+        .photo-gallery img:hover { transform: scale(1.05) rotate(2deg); }
+
+        h1 { font-family: 'Dancing Script', cursive; color: var(--dark-pink); font-size: 2.8rem; margin: 0 0 10px; }
         .step-info { font-size: 0.7rem; color: #bbb; margin-bottom: 25px; text-transform: uppercase; letter-spacing: 3px; font-weight: 600; }
         .hint { font-size: 0.75rem; color: var(--pink); margin-top: -10px; margin-bottom: 15px; font-style: italic; opacity: 0.8; }
         
@@ -56,7 +61,6 @@
         <div id="q1" class="page">
             <div class="step-info">Mission 01</div>
             <p>Siapa nama lengkap pasangan kamu?</p>
-            <p class="hint">pakai huruf kecil semua ya</p>
             <input type="text" id="ans1" autocomplete="off" placeholder="Ketik di sini...">
             <button onclick="nextStep('q2', 20)">Lanjut ✨</button>
         </div>
@@ -64,7 +68,6 @@
         <div id="q2" class="page">
             <div class="step-info">Mission 02</div>
             <p>Siapa nama lengkap kamu?</p>
-            <p class="hint">pakai huruf kecil semua ya</p>
             <input type="text" id="ans2" autocomplete="off" placeholder="Ketik di sini...">
             <button onclick="nextStep('q3', 40)">Lanjut ✨</button>
         </div>
@@ -98,7 +101,20 @@
             <p>Kapan ulang tahun pasangan kamu?</p>
             <p class="hint">Format: 09-07-2004</p>
             <input type="text" id="ans5" autocomplete="off" placeholder="DD-MM-YYYY">
-            <button onclick="nextStep('final-form', 90)">Sedikit Lagi ❤️</button>
+            <button onclick="nextStep('gallery-page', 90)">Lihat Kenangan Kita ❤️</button>
+        </div>
+
+        <div id="gallery-page" class="page">
+            <div class="step-info">Memories</div>
+            <h2 style="font-family: 'Dancing Script'; color: var(--dark-pink);">Our Happy Moments</h2>
+            <div class="photo-gallery">
+                <img src="foto1.jpg" alt="Memory 1">
+                <img src="foto2.jpg" alt="Memory 2">
+                <img src="foto3.jpg" alt="Memory 3">
+                <img src="foto4.jpg" alt="Memory 4">
+            </div>
+            <p style="font-size: 13px; color: #888;">Setiap momen bareng kamu adalah hadiah terindah...</p>
+            <button onclick="nextStep('final-form', 95)">Tulis Harapan ❤️</button>
         </div>
 
         <div id="final-form" class="page">
@@ -120,6 +136,7 @@
 
     <script src="https://www.youtube.com/iframe_api"></script>
     <script>
+        // SCRIPT TETAP SAMA SEPERTI MILIKMU (Hanya memanggil fungsi nextStep sesuai urutan baru)
         let player;
         function onYouTubeIframeAPIReady() {
             player = new YT.Player('youtube-player', {
@@ -146,7 +163,6 @@
             heart.innerHTML = '❤️';
             heart.style.left = Math.random() * 100 + 'vw';
             heart.style.animationDuration = Math.random() * 3 + 2 + 's';
-            heart.style.opacity = Math.random();
             document.getElementById('hearts-container').appendChild(heart);
             setTimeout(() => heart.remove(), 5000);
         }
