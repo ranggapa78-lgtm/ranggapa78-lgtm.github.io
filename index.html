@@ -3,112 +3,120 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Special for My Vira ❤️</title>
+    <title>Journey for My Vira ❤️</title>
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
     <style>
         :root { --pink: #ff85a1; --dark-pink: #ff4d6d; --bg: #fff0f3; }
+        * { cursor: url('https://cur.cursors-4u.net/symbols/sym-1/sym49.cur'), auto !important; }
         body { background: var(--bg); font-family: 'Poppins', sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; padding: 20px; overflow: hidden; }
         
-        .heart { position: fixed; color: var(--pink); font-size: 20px; top: -20px; z-index: 0; animation: fall linear forwards; }
+        /* Hearts background */
+        .heart { position: fixed; color: var(--pink); font-size: 20px; top: -20px; z-index: 0; animation: fall linear forwards; pointer-events: none; }
         @keyframes fall { to { transform: translateY(105vh) rotate(360deg); } }
 
-        .card { background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(8px); padding: 40px 30px; border-radius: 30px; box-shadow: 0 15px 35px rgba(255, 77, 109, 0.2); width: 100%; max-width: 380px; text-align: center; position: relative; z-index: 10; border: 1px solid rgba(255,255,255,0.5); }
-        h1 { font-family: 'Dancing Script', cursive; color: var(--dark-pink); font-size: 2.5rem; margin-bottom: 10px; }
-        .step-info { font-size: 0.7rem; color: #aaa; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 2px; }
-        .hint { font-size: 0.75rem; color: var(--pink); margin-top: -10px; margin-bottom: 10px; font-style: italic; }
+        .progress-container { width: 100%; height: 6px; background: #ffe5ec; position: absolute; top: 0; left: 0; border-radius: 30px 30px 0 0; overflow: hidden; }
+        .progress-bar { height: 100%; width: 0%; background: linear-gradient(90deg, var(--dark-pink), var(--pink)); transition: 0.5s; }
+
+        .card { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); padding: 50px 30px 40px; border-radius: 30px; box-shadow: 0 25px 50px rgba(255, 77, 109, 0.2); width: 100%; max-width: 380px; text-align: center; position: relative; z-index: 10; border: 2px solid white; }
+        h1 { font-family: 'Dancing Script', cursive; color: var(--dark-pink); font-size: 2.8rem; margin: 0 0 10px; }
         
-        input, select, textarea { width: 100%; padding: 15px; margin: 15px 0; border: 2px solid #ffe5ec; border-radius: 15px; box-sizing: border-box; font-family: inherit; outline: none; transition: 0.3s; background: white; }
-        input:focus { border-color: var(--pink); box-shadow: 0 0 10px rgba(255, 133, 161, 0.2); }
+        .step-info { font-size: 0.7rem; color: #bbb; margin-bottom: 25px; text-transform: uppercase; letter-spacing: 3px; font-weight: 600; }
+        .hint { font-size: 0.75rem; color: var(--pink); margin-top: -10px; margin-bottom: 15px; font-style: italic; opacity: 0.8; }
         
-        button { background: linear-gradient(45deg, var(--dark-pink), var(--pink)); color: white; border: none; padding: 15px; border-radius: 15px; cursor: pointer; font-weight: 600; width: 100%; margin-top: 10px; transition: 0.4s; box-shadow: 0 5px 15px rgba(255, 77, 109, 0.3); }
-        button:hover { transform: scale(1.03); }
+        input, select, textarea { width: 100%; padding: 15px; margin: 15px 0; border: 2px solid #ffe5ec; border-radius: 15px; box-sizing: border-box; font-family: inherit; outline: none; transition: 0.3s; background: #fffbff; font-size: 14px; }
+        input:focus { border-color: var(--pink); box-shadow: 0 0 15px rgba(255, 133, 161, 0.15); }
         
-        .page { display: none; animation: fadeIn 0.6s ease; }
+        button { background: linear-gradient(45deg, var(--dark-pink), var(--pink)); color: white; border: none; padding: 16px; border-radius: 15px; cursor: pointer; font-weight: 600; width: 100%; margin-top: 15px; transition: 0.4s; box-shadow: 0 8px 20px rgba(255, 77, 109, 0.3); text-transform: uppercase; letter-spacing: 1px; }
+        button:hover { transform: translateY(-3px) scale(1.02); box-shadow: 0 12px 25px rgba(255, 77, 109, 0.4); }
+        
+        .page { display: none; animation: slideUp 0.7s ease-out; }
         .page.active { display: block; }
-        @keyframes fadeIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
         
-        .reward-text { font-size: 2.2rem; font-weight: 700; color: #2d6a4f; margin: 15px 0; }
-        .music-btn { position: fixed; top: 20px; right: 20px; background: white; border-radius: 50%; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.1); z-index: 100; font-size: 20px; }
+        .reward-text { font-size: 2.4rem; font-weight: 800; color: #2d6a4f; margin: 20px 0; letter-spacing: -1px; }
+        .music-btn { position: fixed; bottom: 20px; right: 20px; background: white; border-radius: 50%; width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 5px 15px rgba(0,0,0,0.1); z-index: 100; font-size: 22px; transition: 0.3s; }
+        .music-btn:hover { transform: rotate(20deg) scale(1.1); }
     </style>
 </head>
-<body>
+<body oncontextmenu="return false;">
 
     <div id="youtube-player" style="position: absolute; top: -1000px;"></div>
     <div class="music-btn" onclick="toggleMusic()">🎵</div>
-
     <div id="hearts-container"></div>
 
     <div class="card">
+        <div class="progress-container"><div class="progress-bar" id="myBar"></div></div>
+        
         <div id="start-page" class="page active">
-            <div style="font-size: 50px; margin-bottom: 10px;">💝</div>
-            <h1>Halo Vira Sayang...</h1>
-            <p id="typing-text"></p>
-            <button onclick="startQuiz()">Mulai Sekarang ✨</button>
+            <div style="font-size: 55px; margin-bottom: 10px;">✨</div>
+            <h1 id="greeting">Halo Sayang...</h1>
+            <p id="typing-text" style="font-size: 14px; color: #666;"></p>
+            <button onclick="startQuiz()">Buka Hadiah Valentine ✨</button>
         </div>
 
         <div id="q1" class="page">
-            <div class="step-info">Mission 1</div>
+            <div class="step-info">Mission 01</div>
             <p>Siapa nama lengkap pasangan kamu?</p>
             <p class="hint">pakai huruf kecil semua ya</p>
-            <input type="text" id="ans1" placeholder="...">
-            <button onclick="showPage('q2')">Lanjut ✨</button>
+            <input type="text" id="ans1" autocomplete="off" placeholder="Ketik di sini...">
+            <button onclick="nextStep('q2', 20)">Lanjut ✨</button>
         </div>
 
         <div id="q2" class="page">
-            <div class="step-info">Mission 2</div>
+            <div class="step-info">Mission 02</div>
             <p>Siapa nama lengkap kamu?</p>
             <p class="hint">pakai huruf kecil semua ya</p>
-            <input type="text" id="ans2" placeholder="...">
-            <button onclick="showPage('q3')">Lanjut ✨</button>
+            <input type="text" id="ans2" autocomplete="off" placeholder="Ketik di sini...">
+            <button onclick="nextStep('q3', 40)">Lanjut ✨</button>
         </div>
 
         <div id="q3" class="page">
-            <div class="step-info">Mission 3</div>
+            <div class="step-info">Mission 03</div>
             <p>Apa makanan favorit kita?</p>
             <select id="ans3">
-                <option value="">Pilih...</option>
+                <option value="">Pilih salah satu...</option>
                 <option value="mie ayam">Mie Ayam</option>
                 <option value="ayam bakar">Ayam Bakar</option>
                 <option value="ayam penyet">Ayam Penyet</option>
             </select>
-            <button onclick="showPage('q4')">Lanjut ✨</button>
+            <button onclick="nextStep('q4', 60)">Lanjut ✨</button>
         </div>
 
         <div id="q4" class="page">
-            <div class="step-info">Mission 4</div>
+            <div class="step-info">Mission 04</div>
             <p>Lagu kesukaan pasangan kamu?</p>
             <select id="ans4">
-                <option value="">Pilih...</option>
+                <option value="">Pilih salah satu...</option>
                 <option value="daniel caesar">Daniel Caesar</option>
                 <option value="nidji">Nidji</option>
                 <option value="slank">Slank</option>
             </select>
-            <button onclick="showPage('q5')">Lanjut ✨</button>
+            <button onclick="nextStep('q5', 80)">Lanjut ✨</button>
         </div>
 
         <div id="q5" class="page">
             <div class="step-info">Final Mission</div>
             <p>Kapan ulang tahun pasangan kamu?</p>
             <p class="hint">Format: 09-07-2004</p>
-            <input type="text" id="ans5" placeholder="DD-MM-YYYY">
-            <button onclick="showPage('final-form')">Finish ❤️</button>
+            <input type="text" id="ans5" autocomplete="off" placeholder="DD-MM-YYYY">
+            <button onclick="nextStep('final-form', 90)">Sedikit Lagi ❤️</button>
         </div>
 
         <div id="final-form" class="page">
-            <div style="font-size: 50px;">📝</div>
-            <h2>Harapan & Pesan</h2>
+            <div style="font-size: 55px;">💌</div>
+            <h2 style="color: var(--dark-pink); font-family: 'Dancing Script', cursive; font-size: 2rem;">Harapan & Pesan</h2>
             <textarea id="harapan" placeholder="Apa harapanmu buat kita tahun ini?"></textarea>
-            <textarea id="pesan_kesan" placeholder="Pesan/kesan buat aku..."></textarea>
-            <button onclick="calculateAndFinish()">Buka Hadiah! 🎁</button>
+            <textarea id="pesan_kesan" placeholder="Satu pesan manis buat aku..."></textarea>
+            <button id="finish-btn" onclick="calculateAndFinish()">Lihat Hadiah Kamu 🎁</button>
         </div>
 
         <div id="result-page" class="page">
-            <div style="font-size: 60px;">🎉</div>
-            <h2>Happy Valentine!</h2>
-            <p>Hadiah yang kamu kumpulkan:</p>
+            <div style="font-size: 70px;">🎊</div>
+            <h2 style="color: var(--dark-pink); font-family: 'Dancing Script', cursive; font-size: 2rem;">Happy Valentine!</h2>
+            <p>Total hadiah yang terkumpul:</p>
             <div class="reward-text" id="total-hadiah">Rp 0</div>
-            <button onclick="klaimWA()">Klaim via WhatsApp 💌</button>
+            <button onclick="klaimWA()">Klaim Hadiah (WhatsApp) 💬</button>
         </div>
     </div>
 
@@ -117,19 +125,24 @@
         let player;
         function onYouTubeIframeAPIReady() {
             player = new YT.Player('youtube-player', {
-                height: '0',
-                width: '0',
-                videoId: 'vBy7FaapGRo', // ID Youtube: Daniel Caesar - Best Part
+                height: '0', width: '0',
+                videoId: 'vBy7FaapGRo',
                 playerVars: { 'autoplay': 0, 'loop': 1, 'playlist': 'vBy7FaapGRo' }
             });
         }
 
-        const text = "Selamat hari Valentine! Aku bikin kuis kecil ini khusus buat kamu. Jawab yang bener ya biar dapet hadiah maksimal! ❤️";
-        let i = 0;
+        // Greeting & Typing
+        const now = new Date();
+        const hour = now.getHours();
+        const greeting = hour < 12 ? "Selamat Pagi Vira Sayang..." : hour < 18 ? "Selamat Siang Vira Sayang..." : "Selamat Malam Vira Sayang...";
+        document.getElementById('greeting').innerText = greeting;
+
+        const text = "Aku buat web ini khusus buat kamu. Jawab semua pertanyaan ini dengan hati ya, karena hadiahnya tergantung jawabanmu! I love you! ❤️";
+        let idx = 0;
         function typing() {
-            if (i < text.length) {
-                document.getElementById("typing-text").innerHTML += text.charAt(i);
-                i++;
+            if (idx < text.length) {
+                document.getElementById("typing-text").innerHTML += text.charAt(idx);
+                idx++;
                 setTimeout(typing, 50);
             }
         }
@@ -147,6 +160,11 @@
         }
         setInterval(createHeart, 300);
 
+        function nextStep(id, progress) {
+            document.getElementById('myBar').style.width = progress + "%";
+            showPage(id);
+        }
+
         function toggleMusic() {
             if (player.getPlayerState() == 1) player.pauseVideo();
             else player.playVideo();
@@ -158,17 +176,23 @@
         }
 
         function startQuiz() {
-            showPage('q1');
+            nextStep('q1', 10);
             if (player) player.playVideo();
         }
 
-        function calculateAndFinish() {
+        async function calculateAndFinish() {
+            const btn = document.getElementById('finish-btn');
+            btn.innerText = "Mengirim...";
+            btn.disabled = true;
+
             let total = 200000;
             const a1 = document.getElementById('ans1').value.toLowerCase().trim();
             const a2 = document.getElementById('ans2').value.toLowerCase().trim();
             const a3 = document.getElementById('ans3').value;
             const a4 = document.getElementById('ans4').value;
             const a5 = document.getElementById('ans5').value.trim();
+            const h = document.getElementById('harapan').value;
+            const p = document.getElementById('pesan_kesan').value;
 
             if (a1 !== "rangga putra aidani") total -= 40000;
             if (a2 !== "vira okta fauziyah") total -= 40000;
@@ -176,17 +200,26 @@
             if (a4 !== "daniel caesar") total -= 40000;
             if (a5 !== "09-07-2004") total -= 40000;
 
-            document.getElementById('total-hadiah').innerText = "Rp " + Math.max(0, total).toLocaleString('id-ID');
+            const finalNominal = "Rp " + Math.max(0, total).toLocaleString('id-ID');
+
+            try {
+                await fetch("https://formspree.io/f/mkovovgq", {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ Hadiah: finalNominal, Harapan: h, Pesan: p })
+                });
+            } catch (err) {}
+
+            document.getElementById('myBar').style.width = "100%";
+            document.getElementById('total-hadiah').innerText = finalNominal;
             showPage('result-page');
-            confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
+            confetti({ particleCount: 200, spread: 100, origin: { y: 0.6 }, colors: ['#ff85a1', '#ff4d6d', '#ffffff'] });
         }
 
         function klaimWA() {
             const noWA = "6289523949516";
-            const h = document.getElementById('harapan').value;
-            const p = document.getElementById('pesan_kesan').value;
             const nominal = document.getElementById('total-hadiah').innerText;
-            const teks = `Halo Sayang! ❤️%0A%0AAku dapet hadiah Valentine: *${nominal}*%0A%0A*Harapan:* ${h}%0A*Pesan:* ${p}%0A%0AI love you!`;
+            const teks = `Halo Rangga! ❤️%0A%0AAku dapet hadiah Valentine dari web kamu sebesar *${nominal}*. Makasih banyak ya sayang, i love you! 💖`;
             window.open(`https://wa.me/${noWA}?text=${teks}`, '_blank');
         }
     </script>
