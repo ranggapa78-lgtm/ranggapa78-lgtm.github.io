@@ -1,16 +1,130 @@
 <!DOCTYPE html>
-<html>
+<html lang="id">
 <head>
-    <title>Web Pertamaku</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ujian Cinta Valentine</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <style>
-        body { font-family: sans-serif; text-align: center; margin-top: 50px; }
-        h1 { color: #2c3e50; }
+        body {
+            background: #fff0f3;
+            font-family: 'Poppins', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+        .card {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(255, 77, 109, 0.2);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+            animation: fadeIn 0.8s;
+        }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        h2 { color: #ff4d6d; }
+        input, select {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 2px solid #ffccd5;
+            border-radius: 10px;
+            box-sizing: border-box;
+            outline: none;
+        }
+        button {
+            background: #ff4d6d;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: bold;
+            width: 100%;
+            margin-top: 10px;
+            transition: 0.3s;
+        }
+        button:hover { background: #ff758f; transform: scale(1.02); }
+        #result-page, #error-page { display: none; }
+        .flower { font-size: 50px; animation: float 3s infinite; }
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-20px); } }
     </style>
 </head>
 <body>
-    <h1>Halo! Saya Belajar Front-End</h1>
-    <p>Website ini berhasil online gratis lewat GitHub Pages.</p>
-</body>
 
+    <div id="quiz-page" class="card">
+        <h2>💖 Ujian Cinta 💖</h2>
+        <p style="font-size: 0.9rem; color: #666;">Jawab dengan jujur atau rencana Valentine kita batal!</p>
+        
+        <input type="text" id="nama_kamu" placeholder="Nama Kamu (Contoh: Rangga)">
+        <input type="text" id="nama_dia" placeholder="Nama Pasangan kamu">
+        
+        <p style="text-align: left; font-size: 0.8rem; margin: 10px 0 0 5px; color: #ff4d6d;">Tanggal Lahir Kita (Contoh: 14-02)</p>
+        <input type="text" id="tgl_lahir" placeholder="Tanggal-Bulan">
+        
+        <select id="makanan">
+            <option value="">Pilih Makanan Favorit Pasangan</option>
+            <option value="mie ayam">Mie Ayam</option>
+            <option value="ayam penyet">Ayam Penyet</option>
+            <option value="ayam bakar">Ayam Bakar</option>
+        </select>
+        
+        <button onclick="cekJawaban()">Kirim Jawaban</button>
+    </div>
+
+    <div id="error-page" class="card">
+        <div style="font-size: 50px;">💔</div>
+        <h2 style="color: gray;">Yahhh... Salah!</h2>
+        <p>Maaf, jawaban kamu ada yang meleset. Kamu belum kenal aku banget ya? Tidak jadi Valentine!</p>
+        <button onclick="location.reload()" style="background: gray;">Coba Lagi</button>
+    </div>
+
+    <div id="result-page" class="card">
+        <div class="flower">🌸🌷🌹</div>
+        <h2>Selamat! Jawaban Benar ❤️</h2>
+        <p>Happy Valentine, Sayang! Makasih udah inget hal-hal kecil tentang kita.</p>
+        <div style="background: #f0fdf4; border: 2px dashed #4ade80; padding: 15px; border-radius: 10px; margin-bottom: 15px;">
+            <p style="margin: 0; color: #166534; font-weight: bold;">🎁 HADIAH DANA TERDETEKSI</p>
+            <p style="font-size: 1.2rem; margin: 5px 0;">Rp 100.000</p>
+        </div>
+        <button onclick="klaimHadiah()">Klaim Hadiah ke WhatsApp</button>
+    </div>
+
+    <script>
+        function cekJawaban() {
+            // AMBIL INPUT & UBAH JADI HURUF KECIL SEMUA
+            const namaKamu = document.getElementById('nama_kamu').value.toLowerCase().trim();
+            const namaDia = document.getElementById('nama_dia').value.toLowerCase().trim();
+            const tgl = document.getElementById('tgl_lahir').value.trim();
+            const makanan = document.getElementById('makanan').value;
+
+            // --- SETTING JAWABAN BENAR DI SINI ---
+            const jawabanNamaKu = "rangga"; 
+            const jawabanNamaDia = "siti"; // GANTI NAMA PACARMU
+            const jawabanTgl = "14-02";    // GANTI TANGGAL PENTING KALIAN
+            const jawabanMakan = "mie ayam"; // GANTI SESUAI PILIHAN DI ATAS
+            // ------------------------------------
+
+            if (namaKamu === jawabanNamaKu && namaDia === jawabanNamaDia && tgl === jawabanTgl && makanan === jawabanMakan) {
+                document.getElementById('quiz-page').style.display = 'none';
+                document.getElementById('result-page').style.display = 'block';
+                document.body.style.background = "#ffccd5";
+            } else {
+                document.getElementById('quiz-page').style.display = 'none';
+                document.getElementById('error-page').style.display = 'block';
+            }
+        }
+
+        function klaimHadiah() {
+            const noWA = "628123456789"; // GANTI PAKAI NOMOR WA KAMU (Awali 62)
+            const pesan = "Sayang, aku sudah lulus Ujian Cinta! Mana hadiah DANA 100rb aku? 😍❤️";
+            window.open(`https://wa.me/${noWA}?text=${encodeURIComponent(pesan)}`, '_blank');
+        }
+    </script>
+</body>
 </html>
- 
