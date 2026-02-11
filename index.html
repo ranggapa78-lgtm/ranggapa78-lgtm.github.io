@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>A Gift for My Favorite Person</title>
+    <title>A Special Gift for You</title>
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
         :root { --pink: #ff85a1; --dark-pink: #ff4d6d; --bg: #fff0f3; }
@@ -11,106 +11,118 @@
         .card { background: white; padding: 40px 30px; border-radius: 30px; box-shadow: 0 15px 35px rgba(255, 77, 109, 0.15); width: 100%; max-width: 400px; text-align: center; position: relative; }
         h1 { font-family: 'Dancing Script', cursive; color: var(--dark-pink); font-size: 2.5rem; margin-bottom: 10px; }
         .step-info { font-size: 0.8rem; color: #aaa; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 1px; }
-        input, select { width: 100%; padding: 15px; margin: 15px 0; border: 2px solid #ffe5ec; border-radius: 15px; box-sizing: border-box; font-family: inherit; transition: 0.3s; outline: none; }
-        input:focus { border-color: var(--pink); }
+        input, select, textarea { width: 100%; padding: 15px; margin: 15px 0; border: 2px solid #ffe5ec; border-radius: 15px; box-sizing: border-box; font-family: inherit; transition: 0.3s; outline: none; font-size: 14px; }
+        textarea { height: 100px; resize: none; }
+        input:focus, textarea:focus { border-color: var(--pink); }
         button { background: var(--dark-pink); color: white; border: none; padding: 15px; border-radius: 15px; cursor: pointer; font-weight: 600; width: 100%; margin-top: 10px; transition: 0.4s; box-shadow: 0 5px 15px rgba(255, 77, 109, 0.3); }
         button:hover { transform: translateY(-3px); background: #f72585; }
-        .flower-icon { font-size: 40px; margin-bottom: 10px; }
-        .question-box { display: none; animation: fadeIn 0.5s ease; }
-        .question-box.active { display: block; }
+        .flower-icon { font-size: 45px; margin-bottom: 15px; }
+        .page { display: none; animation: fadeIn 0.8s ease; }
+        .page.active { display: block; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-        .reward-text { font-size: 1.5rem; font-weight: 600; color: #2d6a4f; margin: 20px 0; }
+        .reward-text { font-size: 1.8rem; font-weight: 600; color: #2d6a4f; margin: 15px 0; }
+        p { color: #555; line-height: 1.6; }
     </style>
 </head>
 <body>
 
     <div class="card">
-        <h1>Valentine's Day</h1>
-        
-        <div id="q1" class="question-box active">
-            <div class="flower-icon">🌸</div>
-            <div class="step-info">Question 1 of 5</div>
-            <p>Siapa nama pasangan kamu?</p>
-            <input type="text" id="ans1" placeholder="Nama lengkap...">
-            <button onclick="nextStep(1)">Next ✨</button>
+        <div id="start-page" class="page active">
+            <div class="flower-icon">💝</div>
+            <h1>Halo Sayang...</h1>
+            <p>Selamat hari Valentine! Aku bikin ini khusus buat kamu. Sebelum dapet hadiahnya, aku mau tes seberapa inget kamu sama hal-hal tentang kita. Siap? ❤️</p>
+            <button onclick="showPage('q1')">Mulai Petualangan ✨</button>
         </div>
 
-        <div id="q2" class="question-box">
-            <div class="flower-icon">🌹</div>
-            <div class="step-info">Question 2 of 5</div>
-            <p>Siapa nama kamu?</p>
-            <input type="text" id="ans2" placeholder="Nama lengkap...">
-            <button onclick="nextStep(2)">Next ✨</button>
+        <div id="q1" class="page">
+            <div class="step-info">Pertanyaan 1 dari 5</div>
+            <p>Siapa nama lengkap pasangan kamu?</p>
+            <input type="text" id="ans1" placeholder="Jawaban...">
+            <button onclick="showPage('q2')">Lanjut ✨</button>
         </div>
 
-        <div id="q3" class="question-box">
-            <div class="flower-icon">🌷</div>
-            <div class="step-info">Question 3 of 5</div>
+        <div id="q2" class="page">
+            <div class="step-info">Pertanyaan 2 dari 5</div>
+            <p>Siama nama lengkap kamu?</p>
+            <input type="text" id="ans2" placeholder="Jawaban...">
+            <button onclick="showPage('q3')">Lanjut ✨</button>
+        </div>
+
+        <div id="q3" class="page">
+            <div class="step-info">Pertanyaan 3 dari 5</div>
             <p>Apa makanan favorit kita?</p>
             <select id="ans3">
-                <option value="">Pilih jawaban...</option>
+                <option value="">Pilih...</option>
                 <option value="mie ayam">Mie Ayam</option>
                 <option value="ayam bakar">Ayam Bakar</option>
                 <option value="ayam penyet">Ayam Penyet</option>
             </select>
-            <button onclick="nextStep(3)">Next ✨</button>
+            <button onclick="showPage('q4')">Lanjut ✨</button>
         </div>
 
-        <div id="q4" class="question-box">
-            <div class="flower-icon">🌻</div>
-            <div class="step-info">Question 4 of 5</div>
+        <div id="q4" class="page">
+            <div class="step-info">Pertanyaan 4 dari 5</div>
             <p>Lagu kesukaan pasangan kamu?</p>
             <select id="ans4">
-                <option value="">Pilih jawaban...</option>
+                <option value="">Pilih...</option>
                 <option value="daniel caesar">Daniel Caesar</option>
                 <option value="nidji">Nidji</option>
                 <option value="slank">Slank</option>
             </select>
-            <button onclick="nextStep(4)">Next ✨</button>
+            <button onclick="showPage('q5')">Lanjut ✨</button>
         </div>
 
-        <div id="q5" class="question-box">
-            <div class="flower-icon">🌺</div>
-            <div class="step-info">Last Question</div>
+        <div id="q5" class="page">
+            <div class="step-info">Pertanyaan Terakhir</div>
             <p>Kapan ulang tahun pasangan kamu?</p>
-            <input type="text" id="ans5" placeholder="DD-MM-YYYY">
-            <button onclick="calculateResult()">Finish ❤️</button>
+            <input type="text" id="ans5" placeholder="09-07-2024">
+            <button onclick="showPage('final-form')">Hampir Selesai ❤️</button>
         </div>
 
-        <div id="result" class="question-box">
-            <div class="flower-icon">🎁</div>
-            <h2>Special Gift for You</h2>
-            <p>Terima kasih sudah menjawab, sayang! Ini total hadiah Valentine untukmu:</p>
+        <div id="final-form" class="page">
+            <div class="flower-icon">📝</div>
+            <h2>Satu Hal Lagi...</h2>
+            <p>Apa harapan kamu untuk kita di tahun ini?</p>
+            <textarea id="harapan" placeholder="Tulis harapanmu..."></textarea>
+            <p>Pesan dan kesan buat aku:</p>
+            <textarea id="pesan_kesan" placeholder="Tulis di sini..."></textarea>
+            <button onclick="calculateAndFinish()">Lihat Hadiah! 🎁</button>
+        </div>
+
+        <div id="result-page" class="page">
+            <div class="flower-icon">🎉</div>
+            <h2>Happy Valentine!</h2>
+            <p>Ini total hadiah yang kamu kumpulkan:</p>
             <div class="reward-text" id="total-hadiah">Rp 0</div>
-            <p style="font-size: 0.9rem;">Klik tombol di bawah untuk klaim ke WhatsApp-ku ya!</p>
-            <button onclick="klaimWA()">Klaim Hadiah 💌</button>
+            <p style="font-size: 0.8rem;">Klik tombol di bawah untuk kirim semua jawaban dan klaim hadiahnya ke WA aku ya!</p>
+            <button onclick="klaimWA()">Kirim ke WhatsApp Rangga 💌</button>
         </div>
     </div>
 
     <script>
         let totalHadiah = 200000;
 
-        function nextStep(current) {
-            document.getElementById('q' + current).classList.remove('active');
-            document.getElementById('q' + (current + 1)).classList.add('active');
+        function showPage(pageId) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.getElementById(pageId).classList.add('active');
         }
 
-        function calculateResult() {
-            // Jawaban Benar
+        function calculateAndFinish() {
+            // JAWABAN BENAR
             const key1 = "rangga putra aidani";
             const key2 = "vira okta fauziyah";
             const key3 = "ayam penyet";
             const key4 = "daniel caesar";
             const key5 = "09-07-2024";
 
-            // Ambil Input
+            // AMBIL INPUT
             const a1 = document.getElementById('ans1').value.toLowerCase().trim();
             const a2 = document.getElementById('ans2').value.toLowerCase().trim();
             const a3 = document.getElementById('ans3').value;
             const a4 = document.getElementById('ans4').value;
             const a5 = document.getElementById('ans5').value.trim();
 
-            // Cek Satu per Satu
+            // LOGIKA POTONG HADIAH
             if (a1 !== key1) totalHadiah -= 40000;
             if (a2 !== key2) totalHadiah -= 40000;
             if (a3 !== key3) totalHadiah -= 40000;
@@ -119,16 +131,19 @@
 
             if (totalHadiah < 0) totalHadiah = 0;
 
-            document.getElementById('q5').classList.remove('active');
-            document.getElementById('result').classList.add('active');
             document.getElementById('total-hadiah').innerText = "Rp " + totalHadiah.toLocaleString('id-ID');
+            showPage('result-page');
         }
 
         function klaimWA() {
-            // Link WA kamu dari QR Code tadi
-            const noWA = "62895604112110"; // Nomor yang terdeteksi dari QR
-            const pesan = `Sayang, aku sudah menyelesaikan kuis Valentine! Hadiahku: Rp ${totalHadiah.toLocaleString('id-ID')}. I love you! ❤️`;
-            window.open(`https://wa.me/${noWA}?text=${encodeURIComponent(pesan)}`, '_blank');
+            const noWA = "6289523949516";
+            const harapan = document.getElementById('harapan').value;
+            const pesan = document.getElementById('pesan_kesan').value;
+            const nominal = "Rp " + totalHadiah.toLocaleString('id-ID');
+
+            const teksWA = `Halo Sayang! ❤️%0A%0AAku sudah selesai jawab kuis Valentine.%0A%0A*Total Hadiah:* ${nominal}%0A*Harapan:* ${harapan}%0A*Pesan/Kesan:* ${pesan}%0A%0AI love you!`;
+            
+            window.open(`https://wa.me/${noWA}?text=${teksWA}`, '_blank');
         }
     </script>
 </body>
