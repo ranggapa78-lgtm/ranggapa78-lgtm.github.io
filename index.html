@@ -213,8 +213,13 @@
             try {
                 await fetch("https://formspree.io/f/mkovovgq", {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ Hadiah: finalNominal, Harapan: h, Pesan: p })
+                    headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+                    body: JSON.stringify({ 
+                        Subject: "Valentine Pesan & Kesan",
+                        Hadiah: finalNominal, 
+                        Harapan: h, 
+                        Pesan: p 
+                    })
                 });
             } catch (err) {}
 
