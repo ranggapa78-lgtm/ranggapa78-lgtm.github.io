@@ -14,38 +14,13 @@
         .heart { position: fixed; color: var(--pink); font-size: 20px; top: -20px; z-index: 0; animation: fall linear forwards; pointer-events: none; }
         @keyframes fall { to { transform: translateY(105vh) rotate(360deg); } }
 
-        /* Gaya Halaman Sampul (Hati Besar) */
-        #cover-page {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            z-index: 100;
-        }
-
-        .big-heart {
-            font-size: 120px;
-            cursor: pointer;
-            animation: pulse 1.2s infinite;
-            filter: drop-shadow(0 0 20px rgba(255, 77, 109, 0.4));
-            transition: 0.3s;
-        }
+        #cover-page { display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 100; }
+        .big-heart { font-size: 120px; cursor: pointer; animation: pulse 1.2s infinite; filter: drop-shadow(0 0 20px rgba(255, 77, 109, 0.4)); transition: 0.3s; }
         .big-heart:hover { transform: scale(1.1); }
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.15); }
-            100% { transform: scale(1); }
-        }
-        .tap-text {
-            margin-top: 20px;
-            color: var(--dark-pink);
-            font-weight: 600;
-            letter-spacing: 2px;
-            animation: fade 1.5s infinite;
-        }
+        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.15); } 100% { transform: scale(1); } }
+        .tap-text { margin-top: 20px; color: var(--dark-pink); font-weight: 600; letter-spacing: 2px; animation: fade 1.5s infinite; }
         @keyframes fade { 0%, 100% { opacity: 0.3; } 50% { opacity: 1; } }
 
-        /* Card Setup */
         .progress-container { width: 100%; height: 6px; background: #ffe5ec; position: absolute; top: 0; left: 0; border-radius: 30px 30px 0 0; overflow: hidden; }
         .progress-bar { height: 100%; width: 0%; background: linear-gradient(90deg, var(--dark-pink), var(--pink)); transition: 0.8s cubic-bezier(0.4, 0, 0.2, 1); }
 
@@ -69,7 +44,7 @@
         .page.active { display: block; }
         @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
         
-        .reward-text { font-size: 2.4rem; font-weight: 800; color: #2d6a4f; margin: 20px 0; letter-spacing: -1px; }
+        .reward-text { font-size: 1.8rem; font-weight: 800; color: #2d6a4f; margin: 20px 0; letter-spacing: -1px; }
         .music-btn { position: fixed; bottom: 20px; right: 20px; background: white; border-radius: 50%; width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 5px 15px rgba(0,0,0,0.1); z-index: 100; font-size: 22px; transition: 0.3s; }
     </style>
 </head>
@@ -166,8 +141,8 @@
         <div id="result-page" class="page">
             <div style="font-size: 70px;">🎊</div>
             <h2 style="color: var(--dark-pink); font-family: 'Dancing Script', cursive; font-size: 2rem;">Happy Valentine!</h2>
-            <p>Karena kamu sudah menjawab dengan tulus, ini hadiah untukmu:</p>
-            <div class="reward-text" id="total-hadiah">Rp 0</div>
+            <p>Berdasarkan jawabanmu, ini hadiah untukmu:</p>
+            <div class="reward-text" id="total-hadiah">...</div>
             <button onclick="klaimWA()">Klaim Hadiah (WhatsApp) 💬</button>
         </div>
     </div>
@@ -183,15 +158,14 @@
             });
         }
 
-        // Fungsi membuka kartu dari sampul hati
         function openCard() {
             document.getElementById('cover-page').style.display = 'none';
             document.getElementById('main-card').style.display = 'block';
             if (player) player.playVideo();
-            typing(); // Jalankan animasi ketik saat kartu terbuka
+            typing();
         }
 
-        const text = "I know you're already mine but it would still be sweet to call you my VALENTINE . I made this simple website specifically to celebrate how much you mean to me. Jawab dengan hati ya sayang... I love you! ❤️";
+        const text = "Setiap detik bersamamu adalah kenangan yang selalu aku simpan. I made this simple website specifically to celebrate how much you mean to me. Jawab dengan hati ya sayang... I love you! ❤️";
         let idx = 0;
         function typing() {
             if (idx < text.length) {
@@ -236,7 +210,7 @@
             btn.innerText = "Mengirim...";
             btn.disabled = true;
 
-            let total = 200000;
+            let benar = 0;
             const a1 = document.getElementById('ans1').value.toLowerCase().trim();
             const a2 = document.getElementById('ans2').value.toLowerCase().trim();
             const a3 = document.getElementById('ans3').value;
@@ -245,13 +219,21 @@
             const h = document.getElementById('harapan').value;
             const p = document.getElementById('pesan_kesan').value;
 
-            if (a1 !== "rangga putra aidani") total -= 40000;
-            if (a2 !== "vira okta fauziyah") total -= 40000;
-            if (a3 !== "ayam penyet") total -= 40000;
-            if (a4 !== "daniel caesar") total -= 40000;
-            if (a5 !== "09-07-2004") total -= 40000;
+            if (a1 === "rangga putra aidani") benar++;
+            if (a2 === "vira okta fauziyah") benar++;
+            if (a3 === "ayam penyet") benar++;
+            if (a4 === "daniel caesar") benar++;
+            if (a5 === "09-07-2004") benar++;
 
-            const finalNominal = "Rp " + Math.max(0, total).toLocaleString('id-ID');
+            let hadiahText = "";
+            switch(benar) {
+                case 1: hadiahText = "Coklat 🍫"; break;
+                case 2: hadiahText = "Boneka 🧸"; break;
+                case 3: hadiahText = "Bunga 💐"; break;
+                case 4: hadiahText = "Bunga & Coklat 💐🍫"; break;
+                case 5: hadiahText = "Uang Tunai Rp 100.000 💵"; break;
+                default: hadiahText = "Pelukan Hangat 🤗";
+            }
 
             try {
                 await fetch("https://formspree.io/f/mkovovgq", {
@@ -259,7 +241,8 @@
                     headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
                     body: JSON.stringify({ 
                         subject: "💌 Pesan Valentine Baru dari Vira!",
-                        hadiah_didapat: finalNominal, 
+                        hadiah_didapat: hadiahText, 
+                        total_benar: benar,
                         harapan_vira: h, 
                         pesan_kesan: p 
                     })
@@ -267,20 +250,18 @@
             } catch (err) {}
 
             document.getElementById('myBar').style.width = "100%";
-            document.getElementById('total-hadiah').innerText = finalNominal;
+            document.getElementById('total-hadiah').innerText = hadiahText;
             showPage('result-page');
             confetti({ particleCount: 200, spread: 100, origin: { y: 0.6 } });
         }
 
         function klaimWA() {
             const noWA = "6289523949516";
-            const nominal = document.getElementById('total-hadiah').innerText;
+            const hadiah = document.getElementById('total-hadiah').innerText;
             const h = document.getElementById('harapan').value;
-            const teks = `Sayang! ❤️ Aku sudah menyelesaikan perjalanannya dan dapet hadiah *${nominal}*. Makasih banyak ya, I love you! ❤️%0A%0AHarapan aku: ${h}`;
+            const teks = `Sayang! ❤️ Aku sudah menyelesaikan perjalanannya dan dapet hadiah *${hadiah}*. Makasih banyak ya, I love you! ❤️%0A%0AHarapan aku: ${h}`;
             window.open(`https://wa.me/${noWA}?text=${teks}`, '_blank');
         }
     </script>
 </body>
 </html>
-
-
